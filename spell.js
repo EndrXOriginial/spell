@@ -28,7 +28,7 @@ const PlayerFactory = (name, age, health, mana) => {
         spell(arr) {
             let lowNpc = [];
             let damage = 0;
-            if (this_mana >= 3) {
+            if (this._mana >= 3) {
                 for (let i = 0; i < arr.length; i++) {
                     if (arr[i].health < 40) {
                         lowNpc.push(arr[i]);
@@ -43,7 +43,7 @@ const PlayerFactory = (name, age, health, mana) => {
                 damage /= lowNpc.length;
                 this._mana -= lowNpc.length * 3;
 
-                return damage;
+                return Math.ceil(damage);
             } else {
                 console.log ('Not enough mana');
             }
@@ -69,7 +69,7 @@ const npcFactory = (id, health, mana) => {
         },
 
         get mana() {
-            this._mana
+            return this._mana
         },
 
         // Would put the npc's health at -10 and kill it
@@ -82,14 +82,12 @@ const npcFactory = (id, health, mana) => {
 }
 
 
-// Function that creates a random number between 0 and 150. Rounds it up to the lower number.
+// Function that creates a random number between 0 and 150. Rounds it up to the lower number
 function randNumber() {
     return Math.floor(Math.random() * 150)
 }
 
-console.log(`The random number is ${randNumber()}`);
-
-// Creates 30 npcs and addes them to an empty array
+// Creates 30 npcs with random health and mana than addes them to an empty array
 let npcArr = [];
 for (let i = 0; i < 30; i++) {
     npcArr.push(npcFactory(i, randNumber(), randNumber()));
@@ -98,6 +96,6 @@ for (let i = 0; i < 30; i++) {
 // Creation of a player called Peterson
 let peterson = PlayerFactory('Peterson', 23, 140, 30);
 
-console.log(npcArr[3].mana)
-console.log(npcArr[7].mana)
-console.log(npcArr[16].mana)
+
+// Prints the amount of damage dealt from the spell based on the npcs
+console.log(`The amount of damage dealt is => ${peterson.spell(npcArr)}`);
